@@ -1,12 +1,11 @@
 from flask import Flask,request,jsonify
+import os
 from joblib import load
 
 app = Flask(__name__)
 
 @app.route('/')
-
 def index():
-    print(request.args)
     if 'query' not in request.args:
         return jsonify({"prediction":None,"message":"sendme a text"})
 
@@ -20,4 +19,4 @@ def index():
     return jsonify({"prediction":prediction})
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=5000,debug=True)
+    app.run(debug=True, port=os.getenv("PORT", default=5000))
